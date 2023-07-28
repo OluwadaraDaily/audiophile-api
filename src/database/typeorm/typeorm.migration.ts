@@ -11,7 +11,7 @@ const typeOrmConfig = new DataSource({
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
   entities: ['dist/**/*.entity.{ts,js}'],
-  migrations: ['dist/migrations/*.{ts,js}'],
+  migrations: ['dist/database/migrations/*.{ts,js}'],
   migrationsTableName: 'typeorm_migrations',
   logger: 'file',
   synchronize: false,
