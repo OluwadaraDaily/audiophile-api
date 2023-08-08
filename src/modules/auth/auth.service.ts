@@ -1,15 +1,13 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UsersService) {}
+  constructor(private userService: UsersService, private jwtService: JwtService) {}
 
   async validateUser(email: string, password: string): Promise<any> {
-    console.log('<------------------>')
-    console.log('Email ->', email)
-    console.log('Password ->', password)
     const user = await this.userService.findByEmail(email)
     const validatePassword = await this.userService.validatePassword(password, user.password)
     if(!validatePassword) {
@@ -26,6 +24,17 @@ export class AuthService {
     const user = await this.userService.create(userData)
     if(user) {
       return user;
+    }
+  }
+
+  async loginUser(user: any) {
+    const payload = {
+      name: user.email,
+      sub: user.id
+    }
+
+    return {
+      access_token: this.jwtService.sign(payload)
     }
   }
 }

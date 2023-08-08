@@ -26,8 +26,8 @@ export class UsersService {
     const hashedPassword = await bcrypt.hash(payload.password, salt)
 
     const userPayload = {
-      password: hashedPassword,
-      ...payload
+      ...payload,
+      password: hashedPassword
     }
 
     // Check for deleted user
@@ -48,8 +48,6 @@ export class UsersService {
       ...userPayload,
       deleted_at: null
     })
-
-    console.log('New User ->', newUser)
 
     await this.userRepository.save(newUser)
 
@@ -75,7 +73,6 @@ export class UsersService {
   }
 
   async findByEmail(email: string): Promise<User> {
-    console.log("here...")
     const user = await this.userRepository.findOne({
       where: { email: email, deleted_at: IsNull() }
     })
