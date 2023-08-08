@@ -7,6 +7,9 @@ export class AuthService {
   constructor(private userService: UsersService) {}
 
   async validateUser(email: string, password: string): Promise<any> {
+    console.log('<------------------>')
+    console.log('Email ->', email)
+    console.log('Password ->', password)
     const user = await this.userService.findByEmail(email)
     const validatePassword = await this.userService.validatePassword(password, user.password)
     if(!validatePassword) {
@@ -22,7 +25,7 @@ export class AuthService {
     //  - Authenticate user [Login, essentially]
     const user = await this.userService.create(userData)
     if(user) {
-      
+      return user;
     }
   }
 }

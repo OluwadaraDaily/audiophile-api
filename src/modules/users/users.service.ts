@@ -49,6 +49,8 @@ export class UsersService {
       deleted_at: null
     })
 
+    console.log('New User ->', newUser)
+
     await this.userRepository.save(newUser)
 
     return newUser;
@@ -73,6 +75,7 @@ export class UsersService {
   }
 
   async findByEmail(email: string): Promise<User> {
+    console.log("here...")
     const user = await this.userRepository.findOne({
       where: { email: email, deleted_at: IsNull() }
     })

@@ -32,6 +32,7 @@ export class PaymentProvider {
     type: 'timestamp',
     name: 'deleted_at',
     default: () => 'CURRENT_TIMESTAMP',
+    nullable: true
   })
   public deleted_at: Date
 }

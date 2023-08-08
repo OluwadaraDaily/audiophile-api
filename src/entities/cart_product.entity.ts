@@ -24,7 +24,7 @@ export class CartProduct {
   @CreateDateColumn({
     type: 'timestamp',
     name: 'created_at',
-    default: () => 'CURRENT_TIMESTAMP',
+    default: () => 'CURRENT_TIMESTAMP'
   })
   public created_at: Date
 
@@ -32,6 +32,7 @@ export class CartProduct {
     type: 'timestamp',
     name: 'deleted_at',
     default: () => 'CURRENT_TIMESTAMP',
+    nullable: true
   })
   public deleted_at: Date
 }
