@@ -7,7 +7,9 @@ services:
       - postgres
     env_file:
       - ./.env
-  
+    volumes:
+      - "./:/usr/src/app"
+
   postgres:
     image: postgres
     ports:
