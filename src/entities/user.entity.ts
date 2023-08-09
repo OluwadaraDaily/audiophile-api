@@ -8,41 +8,41 @@ import { PaymentTransaction } from './payment_transaction.entity';
 @Entity({ name: 'users' })
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  public id: string
+  public id: string;
 
   @Column()
-  public first_name: string
+  public first_name: string;
 
   @Column()
-  public last_name: string
+  public last_name: string;
 
   @Column()
-  public email: string
+  public email: string;
 
   @Column()
-  public password: string
+  public password: string;
 
   @OneToMany(() => Cart, (cart) => cart.user)
-  carts: Cart[]
+  carts: Cart[];
 
   @OneToMany(() => Order, (order) => order.user)
-  orders: Order[]
+  orders: Order[];
 
   @OneToMany(() => Payment, (payment) => payment.user)
-  payments: Payment[]
+  payments: Payment[];
 
   @OneToMany(() => PaymentMethod, (paymentMethod) => paymentMethod.user)
-  paymentMethods: PaymentMethod[]
+  paymentMethods: PaymentMethod[];
 
   @OneToMany(() => PaymentTransaction, (transaction) => transaction.user)
-  transactions: PaymentTransaction[]
+  transactions: PaymentTransaction[];
 
   @CreateDateColumn({
     type: 'timestamp',
     name: 'created_at',
     default: () => 'CURRENT_TIMESTAMP',
   })
-  public created_at: Date
+  public created_at: Date;
 
   @CreateDateColumn({
     type: 'timestamp',
@@ -50,5 +50,5 @@ export class User {
     default: () => 'CURRENT_TIMESTAMP',
     nullable: true
   })
-  public deleted_at: Date
+  public deleted_at: Date;
 }
