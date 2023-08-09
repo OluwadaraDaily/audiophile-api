@@ -18,11 +18,11 @@ export class AuthService {
   }
 
   async signUpUser(userData: CreateUserDto): Promise<any> {
-    // Sign up user
     //  - Create user [User service]
-    //  - Authenticate user [Login, essentially]
     const user = await this.userService.create(userData)
     if(user) {
+      // Send mail to user
+
       return user;
     }
   }
