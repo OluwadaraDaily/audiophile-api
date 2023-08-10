@@ -12,6 +12,9 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { UsersModule } from './modules/users/users.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { MailModule } from './services/mail/mail.module';
+import { MailerModule } from '@nestjs-modules/mailer'
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 
 @Module({
   imports: [
@@ -20,12 +23,23 @@ import { AuthModule } from './modules/auth/auth.module';
       validate,
     }),
     TypeOrmModule.forRootAsync({ useClass: TypeOrmConfigService }),
+    MailerModule.forRoot({
+      transport: `smtps://${process.env.GOOGLE_EMAIL}:${process.env.GOOGLE_PASSWORD}@gmail.com`,
+      template: {
+        dir: process.cwd() + '/src/templates/',
+        adapter: new HandlebarsAdapter(),
+        options: {
+          strict: true,
+        },
+      },
+    }),
     CartsModule,
     ProductsModule,
     CategoriesModule,
     UsersModule,
     PaymentsModule,
-    AuthModule
+    AuthModule,
+    MailModule
   ],
   controllers: [AppController],
   providers: [AppService],

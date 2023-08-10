@@ -2,10 +2,15 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import { MailService } from '@/services/mail/mail.service';
 
 @Injectable()
 export class AuthService {
-  constructor(private userService: UsersService, private jwtService: JwtService) {}
+  constructor(
+    private userService: UsersService,
+    private jwtService: JwtService,
+    private mailService: MailService
+  ) {}
 
   async validateUser(email: string, password: string): Promise<any> {
     const user = await this.userService.findByEmail(email)
@@ -22,7 +27,7 @@ export class AuthService {
     const user = await this.userService.create(userData)
     if(user) {
       // Send mail to user
-
+      await this.sendTestMail()
       return user;
     }
   }
@@ -36,5 +41,15 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload)
     }
+  }
+
+  async sendTestMail() {
+    // const mailData = {
+    //   recipient: "daraoloye99@gmail.com",
+    //   subject: 'Test Email',
+    //   text: "Welcome Text",
+    // }
+    
+    await this.mailService.sendMail()
   }
 }
