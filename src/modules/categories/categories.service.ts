@@ -4,12 +4,15 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Category } from 'src/entities/category.entity';
 import { IsNull, Repository } from 'typeorm';
+import { Product } from 'src/entities/product.entity';
 
 @Injectable()
 export class CategoriesService {
   constructor(
     @InjectRepository(Category)
-    private categoryRepository: Repository<Category>
+    private categoryRepository: Repository<Category>,
+    @InjectRepository(Product)
+    private productRepository: Repository<Product>
   ) { }
   
   async create(payload: CreateCategoryDto): Promise<Category> {
@@ -35,6 +38,16 @@ export class CategoriesService {
       where: { deleted_at: IsNull() }
     })
     return categories;
+  }
+
+  async findAllProducts(id: string): Promise<Product[]> {
+    const category = await this.findOne(id)
+
+    const productsInCategory = await this.productRepository.find({
+      where: { category: { id: category.id }, deleted_at: IsNull() }
+    })
+
+    return productsInCategory;
   }
 
   async findOne(id: string): Promise<Category> {

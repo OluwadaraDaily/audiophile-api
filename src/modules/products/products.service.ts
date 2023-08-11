@@ -1,26 +1,56 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Product } from 'src/entities/product.entity';
+import { IsNull, Not, Repository } from 'typeorm';
 
 @Injectable()
 export class ProductsService {
-  create(createProductDto: CreateProductDto) {
-    return 'This action adds a new product';
+  constructor(
+    @InjectRepository(Product)
+    private productRespository: Repository<Product>
+  ) {}
+  async create(payload: CreateProductDto): Promise<Product> {
+    const product = await this.productRespository.create({
+      ...payload,
+      deleted_at: null
+    })
+    await this.productRespository.save(product)
+    return product;
   }
 
-  findAll() {
-    return `This action returns all products`;
+  async findAll(): Promise<Product[]> {
+    const products = await this.productRespository.find({
+      where: { deleted_at: IsNull() }
+    })
+
+    return products;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} product`;
+  async findOne(id: string): Promise<Product> {
+    const product = await this.productRespository.findOne({
+      where: { id, deleted_at: IsNull() }
+    })
+    if (!product) {
+      throw new HttpException(`Product with ID ${id} not found`, HttpStatus.NOT_FOUND)
+    }
+    return product;
   }
 
-  update(id: number, updateProductDto: UpdateProductDto) {
-    return `This action updates a #${id} product`;
+  async update(id: string, payload: UpdateProductDto): Promise<Product> {
+    const product = await this.findOne(id)
+    const updatedProduct = {
+      ...product,
+      ...payload
+    }
+    await this.productRespository.save(updatedProduct)
+    return updatedProduct;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} product`;
+  async remove(id: string): Promise<any> {
+    const product = await this.findOne(id)
+    await this.productRespository.delete(id)
+    return { message: "Category deleted successfully" };
   }
 }
