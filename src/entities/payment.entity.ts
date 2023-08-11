@@ -15,11 +15,11 @@ export class Payment {
 
   @ManyToOne(() => User, (user) => user.payments)
   @JoinColumn({ name: 'user_id' })
-  user: User
+  public user: User
 
   @ManyToOne(() => Order, (order) => order.payments)
   @JoinColumn({ name: 'order_id' })
-  order: Order
+  public order: Order
 
   @Column({ type: 'float' })
   public amount: number

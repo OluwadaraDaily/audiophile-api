@@ -10,7 +10,7 @@ export class Cart {
 
   @ManyToOne(() => User, (user) => user.carts)
   @JoinColumn({ name: 'user_id' })
-  user: User
+  public user: User
 
   @Column({ type: 'boolean' })
   public is_active: boolean

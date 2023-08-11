@@ -4,6 +4,7 @@ import { Order } from './order.entity';
 import { Payment } from './payment.entity';
 import { PaymentMethod } from './payment_method.entity';
 import { PaymentTransaction } from './payment_transaction.entity';
+import { UserToken } from './user_token.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -22,6 +23,9 @@ export class User {
   @Column()
   public password: string;
 
+  @Column({ default: false })
+  public is_active: boolean;
+
   @OneToMany(() => Cart, (cart) => cart.user)
   carts: Cart[];
 
@@ -36,6 +40,9 @@ export class User {
 
   @OneToMany(() => PaymentTransaction, (transaction) => transaction.user)
   transactions: PaymentTransaction[];
+
+  @OneToMany(() => UserToken, (userToken) => userToken.user)
+  tokens: UserToken[]
 
   @CreateDateColumn({
     type: 'timestamp',

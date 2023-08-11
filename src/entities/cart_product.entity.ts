@@ -9,11 +9,11 @@ export class CartProduct {
 
   @ManyToOne(() => Cart, (cart) => cart.products)
   @JoinColumn({ name: 'cart_id' })
-  cart: Cart
+  public cart: Cart
 
   @ManyToOne(() => Product, (product) => product.cart_products)
   @JoinColumn({ name: 'product_id' })
-  product: Product
+  public product: Product
 
   @Column({ type: "int" })
   public quantity: number
