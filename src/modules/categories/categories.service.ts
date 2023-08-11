@@ -1,26 +1,69 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Category } from 'src/entities/category.entity';
+import { IsNull, Repository } from 'typeorm';
 
 @Injectable()
 export class CategoriesService {
-  create(createCategoryDto: CreateCategoryDto) {
-    return 'This action adds a new category';
+  constructor(
+    @InjectRepository(Category)
+    private categoryRepository: Repository<Category>
+  ) { }
+  
+  async create(payload: CreateCategoryDto): Promise<Category> {
+    const { name } = payload
+    let category = await this.categoryRepository.findOne({
+      where: { name }
+    })
+    if (category) {
+      throw new HttpException(`Category with name ${name} already exists`, HttpStatus.CONFLICT)
+    }
+    category = await this.categoryRepository.create({
+      ...payload,
+      deleted_at: null
+    })
+
+    await this.categoryRepository.save(category)
+
+    return category;
   }
 
-  findAll() {
-    return `This action returns all categories`;
+  async findAll(): Promise<Category[]> {
+    const categories = await this.categoryRepository.find({
+      where: { deleted_at: IsNull() }
+    })
+    return categories;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: string): Promise<Category> {
+    const category = await this.categoryRepository.findOne({
+      where: { id, deleted_at: IsNull() }
+    })
+    if (!category) {
+      throw new HttpException(`Category with ID ${id} not found`, HttpStatus.NOT_FOUND)
+    }
+
+    return category;
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: string, payload: UpdateCategoryDto): Promise<Category> {
+    const category = await this.findOne(id)
+    
+    const updatedCategory = {
+      ...category,
+      name: payload.name,
+      deleted_at: null
+    }
+    await this.categoryRepository.save(updatedCategory)
+
+    return updatedCategory;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: string): Promise<any> {
+    const category = await this.findOne(id)
+    await this.categoryRepository.delete(category.id)
+    return { message: "Category deleted successfully" };
   }
 }
