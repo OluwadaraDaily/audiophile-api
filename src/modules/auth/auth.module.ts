@@ -8,6 +8,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
 import { MailModule } from '@/services/mail/mail.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserToken } from '@/entities/user_token.entity';
+import { User } from '@/entities/user.entity';
 
 @Module({
   imports: [
@@ -19,7 +22,8 @@ import { MailModule } from '@/services/mail/mail.module';
         expiresIn: '60s'
       }
     }),
-    MailModule
+    MailModule,
+    TypeOrmModule.forFeature([UserToken, User])
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
   controllers: [AuthController],

@@ -16,11 +16,11 @@ export class PaymentMethod {
 
   @ManyToOne(() => PaymentProvider, (paymentProvider) => paymentProvider.paymentMethods)
   @JoinColumn({ name: 'payment_provider_id' })
-  provider: PaymentProvider
+  public provider: PaymentProvider
 
   @ManyToOne(() => User, (user) => user.paymentMethods)
   @JoinColumn({ name: 'user_id' })
-  user: User
+  public user: User
 
   @Column()
   public type: string

@@ -49,24 +49,21 @@ export class MailService {
     this.mailerService.addTransporter('gmail', config)
   }
 
-  public async sendMail() {
-    await this.setTransport()
-    this.mailerService.sendMail({
-      transporterName: 'gmail',
-      to: 'daraoloye99@gmail.com', // list of receivers
-      from: 'noreply@audiophile.com', // sender address
-      subject: 'Test email', // Subject line
-      template: 'demo',
-      context: {
-        // Data to be sent to template engine..
-        code: '38320',
-      },
-    })
-    .then((success) => {
-      console.log(success);
-    })
-    .catch((err) => {
-      console.log('Error ->', err);
-    });
+  public async sendMail(emailData: SendMailDto) {
+    try {
+      await this.setTransport()
+      const { recipient, subject, template_name, data } = emailData
+      await this.mailerService.sendMail({
+        transporterName: 'gmail',
+        from: 'noreply@audiophile.com',
+        to: recipient,
+        subject,
+        template: template_name,
+        context: data,
+      })
+    } catch (error) {
+      console.log('Error ->', error)
+      return error.message
+    }
   }
 }

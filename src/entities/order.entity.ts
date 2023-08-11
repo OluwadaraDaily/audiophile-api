@@ -18,11 +18,11 @@ export class Order {
 
   @ManyToOne(() => User, (user) => user.orders)
   @JoinColumn({ name: 'user_id' })
-  user: User
+  public user: User
 
   @ManyToOne(() => Cart, (cart) => cart.orders)
   @JoinColumn({ name: 'cart_id' })
-  cart: Cart
+  public cart: Cart
 
   @OneToMany(() => Payment, (payment) => payment.order)
   payments: Payment[]
