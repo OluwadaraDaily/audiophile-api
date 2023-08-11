@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
 import { SendMailDto } from './dto/send-mail.dto';
-import { authConfig } from './constants';
 import { google } from 'googleapis'
-import nodemailer from 'nodemailer'
 import { ConfigService } from '@nestjs/config';
 import { Options } from 'nodemailer/lib/smtp-transport';
 

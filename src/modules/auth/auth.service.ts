@@ -2,11 +2,11 @@ import { HttpException, Injectable } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { MailService } from '@/services/mail/mail.service';
+import { MailService } from '../../services/mail/mail.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { UserToken } from '@/entities/user_token.entity';
+import { UserToken } from '../../entities/user_token.entity';
 import { IsNull, Repository } from 'typeorm';
-import { User } from '@/entities/user.entity';
+import { User } from '../../entities/user.entity';
 
 @Injectable()
 export class AuthService {

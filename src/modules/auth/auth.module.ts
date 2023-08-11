@@ -7,10 +7,10 @@ import { AuthController } from './auth.controller';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants';
 import { JwtStrategy } from './jwt.strategy';
-import { MailModule } from '@/services/mail/mail.module';
+import { MailModule } from '../../services/mail/mail.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserToken } from '@/entities/user_token.entity';
-import { User } from '@/entities/user.entity';
+import { UserToken } from '../../entities/user_token.entity';
+import { User } from '../../entities/user.entity';
 
 @Module({
   imports: [

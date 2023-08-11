@@ -7,7 +7,7 @@ import { IsNull, Not, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { UserToken } from '../../entities/user_token.entity';
 import { v4 as uuidv4 } from 'uuid';
-import { MailService } from '@/services/mail/mail.service';
+import { MailService } from '../../services/mail/mail.service';
 
 @Injectable()
 export class UsersService {
@@ -81,7 +81,6 @@ export class UsersService {
   
       return newUser;
     } catch (error) {
-      console.log('Error ->', error)
       return error
     }
   }
