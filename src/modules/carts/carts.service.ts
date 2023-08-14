@@ -13,10 +13,7 @@ export class CartsService {
   constructor(
     @InjectRepository(Cart)
     private cartRepository: Repository<Cart>,
-    @InjectRepository(CartProduct)
-    private cartProductRepository: Repository<CartProduct>,
     private usersService: UsersService,
-    private productsService: ProductsService
   ){}
   async create(payload: CreateCartDto): Promise<Cart> {
     const { user_id: userId } = payload
