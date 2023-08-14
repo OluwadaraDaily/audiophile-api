@@ -15,6 +15,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { MailModule } from './services/mail/mail.module';
 import { MailerModule } from '@nestjs-modules/mailer'
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
+import { CartProductsModule } from './modules/cart_products/cart_products.module';
 
 @Module({
   imports: [
@@ -39,7 +40,8 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
     UsersModule,
     PaymentsModule,
     AuthModule,
-    MailModule
+    MailModule,
+    CartProductsModule
   ],
   controllers: [AppController],
   providers: [AppService],

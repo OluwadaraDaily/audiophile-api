@@ -63,7 +63,7 @@ export class AuthService {
       await this.userRepository.save(user)
   
   
-      return { message: 'User activated successfully' };
+      return { message: 'Account activated successfully' };
     } catch (error) {
       return error
     }

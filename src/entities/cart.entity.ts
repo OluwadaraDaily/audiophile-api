@@ -12,7 +12,7 @@ export class Cart {
   @JoinColumn({ name: 'user_id' })
   public user: User
 
-  @Column({ type: 'boolean' })
+  @Column({ type: 'boolean', default: true })
   public is_active: boolean
 
   @OneToMany(() => CartProduct, (cartProduct) => cartProduct.cart)

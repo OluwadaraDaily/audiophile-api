@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { CartsService } from './carts.service';
 import { CreateCartDto } from './dto/create-cart.dto';
 import { UpdateCartDto } from './dto/update-cart.dto';
@@ -8,27 +8,27 @@ export class CartsController {
   constructor(private readonly cartsService: CartsService) {}
 
   @Post()
-  create(@Body() createCartDto: CreateCartDto) {
-    return this.cartsService.create(createCartDto);
+  async create(@Body() payload: CreateCartDto) {
+    return await this.cartsService.create(payload);
   }
 
-  @Get()
-  findAll() {
-    return this.cartsService.findAll();
+  @Get('?')
+  findAll(@Query('is_active') isActive: string | undefined) {
+    return this.cartsService.findAll(isActive);
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.cartsService.findOne(+id);
+    return this.cartsService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCartDto: UpdateCartDto) {
-    return this.cartsService.update(+id, updateCartDto);
+  update(@Param('id') id: string, @Body() payload: UpdateCartDto) {
+    return this.cartsService.update(id, payload);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.cartsService.remove(+id);
+    return this.cartsService.remove(id);
   }
 }
