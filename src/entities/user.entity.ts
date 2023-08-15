@@ -1,10 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, OneToMany, OneToOne } from 'typeorm';
 import { Cart } from './cart.entity';
 import { Order } from './order.entity';
 import { Payment } from './payment.entity';
 import { PaymentMethod } from './payment_method.entity';
 import { PaymentTransaction } from './payment_transaction.entity';
 import { UserToken } from './user_token.entity';
+import { BillingDetail } from './billing_details.entity';
+import { ShippingInfo } from './shipping_info.entity';
 
 @Entity({ name: 'users' })
 export class User {
@@ -43,6 +45,12 @@ export class User {
 
   @OneToMany(() => UserToken, (userToken) => userToken.user)
   tokens: UserToken[]
+
+  @OneToOne(() => BillingDetail, (billingDetail) => billingDetail.user)
+  billing_detail: BillingDetail
+  
+  @OneToMany(() => ShippingInfo, (shippingInfo) => shippingInfo.user)
+  shipping_infos: ShippingInfo
 
   @CreateDateColumn({
     type: 'timestamp',
