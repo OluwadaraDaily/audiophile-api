@@ -3,7 +3,7 @@ import { CreateBillingDto } from './dto/create-billing.dto';
 import { UpdateBillingDto } from './dto/update-billing.dto';
 import { UsersService } from '../users/users.service';
 import { InjectRepository } from '@nestjs/typeorm';
-import { BillingDetail } from 'src/entities/billing_details.entity';
+import { BillingDetail } from '../../entities/billing_details.entity';
 import { IsNull, Repository } from 'typeorm';
 
 @Injectable()
