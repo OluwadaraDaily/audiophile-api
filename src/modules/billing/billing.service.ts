@@ -72,6 +72,6 @@ export class BillingService {
   async remove(id: string): Promise<any> {
     const billingDetail = await this.findOne(id)
     await this.billingDetailRepository.delete(billingDetail.id)
-    return { message: 'Billing Detail deleted successfully' };
+    return { message: 'Billing detail deleted successfully' };
   }
 }
