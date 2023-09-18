@@ -31,7 +31,7 @@ export class PaymentMethod {
   @Column()
   public currency_code: string
 
-  @Column({ type: 'boolean' })
+  @Column({ type: 'boolean', default: false })
   public is_primary: boolean
 
   @Column({ type: "enum", enum: PaymentStatus, default: PaymentStatus.ACTIVE })
@@ -57,6 +57,7 @@ export class PaymentMethod {
     type: 'timestamp',
     name: 'last_used_at',
     default: () => 'CURRENT_TIMESTAMP',
+    nullable: true
   })
   public last_used_at: Date
 
