@@ -15,7 +15,9 @@ export class BillingDetail {
   @Column()
   public phone_number: string;
 
-  @OneToOne(() => User, (user) => user.billing_detail)
+  @OneToOne(() => User, (user) => user.billing_detail, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'user_id' })
   public user: User
 

@@ -16,11 +16,15 @@ export class Order {
   public id: string
 
 
-  @ManyToOne(() => User, (user) => user.orders)
+  @ManyToOne(() => User, (user) => user.orders, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'user_id' })
   public user: User
 
-  @ManyToOne(() => Cart, (cart) => cart.orders)
+  @ManyToOne(() => Cart, (cart) => cart.orders, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'cart_id' })
   public cart: Cart
 
