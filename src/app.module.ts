@@ -18,6 +18,7 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { CartProductsModule } from './modules/cart_products/cart_products.module';
 import { BillingModule } from './modules/billing/billing.module';
 import { ShippingInfoModule } from './modules/shipping-info/shipping-info.module';
+import { OrdersModule } from './modules/orders/orders.module';
 
 @Module({
   imports: [
@@ -45,7 +46,8 @@ import { ShippingInfoModule } from './modules/shipping-info/shipping-info.module
     MailModule,
     CartProductsModule,
     BillingModule,
-    ShippingInfoModule
+    ShippingInfoModule,
+    OrdersModule
   ],
   controllers: [AppController],
   providers: [AppService],
