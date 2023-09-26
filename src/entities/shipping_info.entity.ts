@@ -18,7 +18,9 @@ export class ShippingInfo {
   @Column()
   public country: string;
 
-  @ManyToOne(() => User, (user) => user.shipping_infos)
+  @ManyToOne(() => User, (user) => user.shipping_infos, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'user_id' })
   public user: User;
 

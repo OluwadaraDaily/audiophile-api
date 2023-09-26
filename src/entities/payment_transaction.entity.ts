@@ -14,15 +14,21 @@ export class PaymentTransaction {
   @PrimaryGeneratedColumn('uuid')
   public id: string
 
-  @ManyToOne(() => User, (user) => user.transactions)
+  @ManyToOne(() => User, (user) => user.transactions, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'user_id' })
   public user: User
 
-  @ManyToOne(() => PaymentMethod, (paymentMethod) => paymentMethod.transactions)
+  @ManyToOne(() => PaymentMethod, (paymentMethod) => paymentMethod.transactions, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'payment_method_id' })
   public paymentMethod: PaymentMethod
 
-  @ManyToOne(() => Order, (order) => order.transactions)
+  @ManyToOne(() => Order, (order) => order.transactions, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'order_id' })
   public order: Order
 

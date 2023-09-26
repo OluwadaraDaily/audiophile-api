@@ -14,11 +14,15 @@ export class PaymentMethod {
   @PrimaryGeneratedColumn('uuid')
   public id: string
 
-  @ManyToOne(() => PaymentProvider, (paymentProvider) => paymentProvider.paymentMethods)
+  @ManyToOne(() => PaymentProvider, (paymentProvider) => paymentProvider.paymentMethods, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'payment_provider_id' })
   public provider: PaymentProvider
 
-  @ManyToOne(() => User, (user) => user.paymentMethods)
+  @ManyToOne(() => User, (user) => user.paymentMethods, {
+    onDelete: 'CASCADE'
+  })
   @JoinColumn({ name: 'user_id' })
   public user: User
 

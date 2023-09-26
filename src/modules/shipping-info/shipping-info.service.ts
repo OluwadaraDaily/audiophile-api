@@ -54,20 +54,20 @@ export class ShippingInfoService {
   }
 
   async update(id: string, payload: UpdateShippingInfoDto) {
-    const billingInfo = await this.findOne(id)
-    const updatedBillingInfo = {
-      ...billingInfo,
+    const shippingInfo = await this.findOne(id)
+    const updatedShippingInfo = {
+      ...shippingInfo,
       ...payload,
       deleted_at: null
     }
-    await this.shippingInfoRepo.save(updatedBillingInfo)
+    await this.shippingInfoRepo.save(updatedShippingInfo)
 
-    return updatedBillingInfo;
+    return updatedShippingInfo;
   }
 
   async remove(id: string) {
-    const billingInfo = await this.findOne(id)
-    await this.shippingInfoRepo.delete(billingInfo.id)
-    return { message: 'Billing Information deleted successfully' }
+    const shippingInfo = await this.findOne(id)
+    await this.shippingInfoRepo.delete(shippingInfo.id)
+    return { message: 'Shipping information deleted successfully' }
   }
 }
